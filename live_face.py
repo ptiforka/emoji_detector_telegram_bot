@@ -55,6 +55,7 @@ def process_image(image) :
         faceCascade = cv2.CascadeClassifier(cascPath)
 
         #BGR -> Gray conversion
+
         frame = cv.imread("file_froN.jpg")
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 

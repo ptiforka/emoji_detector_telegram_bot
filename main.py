@@ -15,16 +15,10 @@ def send_welcome(message):
 
 @bot.message_handler(content_types=['photo'])
 def handle_docs_audio(message):
-    print(message.json["photo"][0]["file_id"])
     file_id =message.json["photo"][-1]["file_id"]
     file_info = bot.get_file(file_id)
-    print("")
-    print(file_info)
-    print("")
-    print("")
 
     url = 'https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN, file_info.file_path)
-    print(url)
     file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN, file_info.file_path))
     response = requests.get(url, stream=True)
 
@@ -34,7 +28,6 @@ def handle_docs_audio(message):
     result = live_face.process_image("file_from_tg.jpg")
     time.sleep(1)
     photo = open('released_faces.jpg', 'rb')
-    print(result)
     bot.reply_to(message, result)
     bot.send_photo(message.chat.id, photo)
 
@@ -44,5 +37,5 @@ def webhook():
     bot.set_webhook(url='https://your_heroku_project.com/' + TOKEN)
     return "!", 200
 
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+bot.polling()
+
